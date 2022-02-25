@@ -24,7 +24,7 @@ document.getElementById('first-div').appendChild(forms);
 
 let searchBox = document.createElement('input');
 searchBox.setAttribute('id', 'search-Box');
-searchBox.setAttribute('type', 'search');
+searchBox.setAttribute('type', 'text');
 searchBox.setAttribute('placeholder', 'search');
 searchBox.setAttribute('aria-label', 'search');
 searchBox.classList.add('form-control', 'me-2');
@@ -49,23 +49,23 @@ div2.setAttribute('id', 'data');
 div2.classList.add('row', 'mt-4', 'bg-white');
 document.getElementById('second-div').appendChild(div2);
 
-let p1 = document.createElement('h1');
-p1.classList.add('col-3', 'h4', 'fs-4');
+let p1 = document.createElement('ul');
+p1.classList.add('col-3', 'h4', 'fs-4', 'bg-dark');
 p1.innerHTML = 'NAME'
 document.getElementById('data').appendChild(p1);
 
-let p2 = document.createElement('h1');
-p2.classList.add('col-3', 'h4', 'fs-4');
+let p2 = document.createElement('ul');
+p2.classList.add('col-3', 'h4', 'fs-4', 'bg-dark');
 p2.innerHTML = 'PHONE'
 document.getElementById('data').appendChild(p2);
 
-let p3 = document.createElement('h1');
-p3.classList.add('col-3', 'h4', 'fs-4');
+let p3 = document.createElement('ul');
+p3.classList.add('col-3', 'h4', 'fs-4', 'bg-dark');
 p3.innerHTML = 'ADDRESS'
 document.getElementById('data').appendChild(p3);
 
-let p4 = document.createElement('h1');
-p4.classList.add('col-3', 'h4', 'fs-4');
+let p4 = document.createElement('ul');
+p4.classList.add('col-3', 'h4', 'fs-4', 'bg-dark');
 p4.innerHTML = 'WEBSITE'
 document.getElementById('data').appendChild(p4);
 
@@ -77,25 +77,25 @@ fetch("https://api.openbrewerydb.org/breweries")
         let parentDiv = document.getElementById("data");
 
         response.map((o) => {
-            let name = document.createElement("p");
+            let name = document.createElement("li");
             name.setAttribute('id', 'data1');
             name.classList.add("col-3");
             name.innerText = o.name;
             parentDiv.appendChild(name);
 
-            let phone = document.createElement("p");
+            let phone = document.createElement("li");
             phone.setAttribute('id', 'data1');
             phone.classList.add("col-3");
             phone.innerText = o.phone;
             parentDiv.appendChild(phone);
 
-            let state = document.createElement("p");
+            let state = document.createElement("li");
             state.setAttribute('id', 'data1');
             state.classList.add("col-3");
             state.innerText = o.state;
             parentDiv.appendChild(state);
 
-            let web = document.createElement("p");
+            let web = document.createElement("li");
             web.setAttribute('id', 'data1');
             web.classList.add("col-3");
             web.innerText = o.website_url;
