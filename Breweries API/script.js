@@ -37,7 +37,7 @@ btn.classList.add('btn', 'btn-outline-success');
 btn.innerHTML = 'Search';
 document.getElementById('forms').appendChild(btn);
 
-/*------------------ FETCHE DATA STORED AND DISPLAYED----------------------- */
+/*------------------ FETCH DATA DISPLAYED----------------------- */
 
 let div1 = document.createElement('div');
 div1.setAttribute('id', 'second-div');
@@ -46,25 +46,25 @@ document.body.appendChild(div1);
 
 let div2 = document.createElement('div');
 div2.setAttribute('id', 'data');
-div2.classList.add('row', 'mt-4');
+div2.classList.add('row', 'mt-4', 'bg-white');
 document.getElementById('second-div').appendChild(div2);
 
-let p1 = document.createElement('p');
+let p1 = document.createElement('h1');
 p1.classList.add('col-3', 'h4', 'fs-4');
 p1.innerHTML = 'NAME'
 document.getElementById('data').appendChild(p1);
 
-let p2 = document.createElement('p');
+let p2 = document.createElement('h1');
 p2.classList.add('col-3', 'h4', 'fs-4');
 p2.innerHTML = 'PHONE'
 document.getElementById('data').appendChild(p2);
 
-let p3 = document.createElement('p');
+let p3 = document.createElement('h1');
 p3.classList.add('col-3', 'h4', 'fs-4');
 p3.innerHTML = 'ADDRESS'
 document.getElementById('data').appendChild(p3);
 
-let p4 = document.createElement('p');
+let p4 = document.createElement('h1');
 p4.classList.add('col-3', 'h4', 'fs-4');
 p4.innerHTML = 'WEBSITE'
 document.getElementById('data').appendChild(p4);
@@ -78,33 +78,53 @@ fetch("https://api.openbrewerydb.org/breweries")
 
         response.map((o) => {
             let name = document.createElement("p");
+            name.setAttribute('id', 'data1');
             name.classList.add("col-3");
             name.innerText = o.name;
             parentDiv.appendChild(name);
 
             let phone = document.createElement("p");
+            phone.setAttribute('id', 'data1');
             phone.classList.add("col-3");
             phone.innerText = o.phone;
             parentDiv.appendChild(phone);
 
             let state = document.createElement("p");
+            state.setAttribute('id', 'data1');
             state.classList.add("col-3");
             state.innerText = o.state;
             parentDiv.appendChild(state);
 
             let web = document.createElement("p");
+            web.setAttribute('id', 'data1');
             web.classList.add("col-3");
             web.innerText = o.website_url;
             parentDiv.appendChild(web);
         })
     }).catch((er) => console.error(er));
-let act = document.getElementById('se-btn');
-act.addEventListener('click', () => {
-    search();
-    let text = document.getElementById("text")
-    text.value = "";
-    document.body.appendChild(text);
-});
+
+
+/*-------------------------- TRYING TO FILTER---------------------- */
+
+/* function findBrew() {
+    let data = document.getElementById('search-Box');
+    let filter = input.value.toUpperCase();
+    let data1 = document.getElementById('data1');
+    let a;
+    let text;
+
+    for (let i = 0; i < data1.length; i++) {
+        a = data1[i].getElementById('data1')[0];
+        text = a.textContent || a.innerText;
+        if (text.toUpperCase().indexOf(filter) > -1) {
+            data1[i].style.display = "";
+        } else {
+            data1[i].style.display = "none"
+        }
+    }
+
+} */
+
 async function search() {
     try {
         const result = await get("https://api.openbrewerydb.org/breweries")
