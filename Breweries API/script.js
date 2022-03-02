@@ -17,6 +17,7 @@ document.getElementById('first-div').appendChild(anchor);
 
 let forms = document.createElement('form');
 forms.setAttribute('id', 'forms')
+forms.setAttribute('onsubmit', false)
 forms.classList.add('d-flex');
 document.getElementById('first-div').appendChild(forms);
 
@@ -33,6 +34,8 @@ document.getElementById('forms').appendChild(searchBox);
 
 let btn = document.createElement('button');
 btn.setAttribute('id', 'se-btn');
+btn.setAttribute('type', 'button');
+btn.setAttribute('onclick', 'search()');
 btn.classList.add('btn', 'btn-outline-success');
 btn.innerHTML = 'Search';
 document.getElementById('forms').appendChild(btn);
@@ -71,12 +74,14 @@ document.getElementById('data').appendChild(p4);
 
 /*-------------------------- FETCHING DATA FROM API---------------------------- */
 
+let globalResponse;
 fetch("https://api.openbrewerydb.org/breweries")
     .then((v) => v.json())
     .then((response) => {
+        globalResponse = response;
         let parentDiv = document.getElementById("data");
-
         response.map((o) => {
+
             let name = document.createElement("li");
             name.setAttribute('id', 'data1');
             name.classList.add("col-3");
@@ -100,6 +105,7 @@ fetch("https://api.openbrewerydb.org/breweries")
             web.classList.add("col-3");
             web.innerText = o.website_url;
             parentDiv.appendChild(web);
+
         })
     }).catch((er) => console.error(er));
 
@@ -125,25 +131,43 @@ fetch("https://api.openbrewerydb.org/breweries")
 
 } */
 
+
 async function search() {
-    try {
-        const result = await get("https://api.openbrewerydb.org/breweries")
-            .then((res) => {
-                res.filter((n) => n.name)
-                console.log(n)
-            }).then((res) => {
-                res.filter((p) => p.phone)
-                console.log(p)
-            })
-            .then((res) => {
-                res.filter((s) => s.state)
-                console.log(s)
-            })
-            .then((res) => {
-                res.filter((w) => w.website_url)
-                console.log(w)
-            })
-    } catch (error) {
-        console.error(error);
+
+    let parentDiv = document.getElementById("data");
+    while (parentDiv.childNodes.length > 4) {
+        parentDiv.removeChild(parentDiv.lastChild);
     }
-};
+    fetch("https://api.openbrewerydb.org/breweries")
+        .then((v) => v.json())
+        .then((response) => {
+            let a = document.getElementById('search-Box').value;
+            response.map((o) => {
+                if (((o.name != null) && (o.name.includes(a))) || ((o.phone != null) && (o.phone.includes(a))) || ((o.state != null) && (o.state.includes(a))) || ((o.website_url != null) && (o.website_url.includes(a)))) {
+                    let name = document.createElement("li");
+                    name.setAttribute('id', 'data1');
+                    name.classList.add("col-3");
+                    name.innerText = o.name;
+                    parentDiv.appendChild(name);
+
+                    let phone = document.createElement("li");
+                    phone.setAttribute('id', 'data1');
+                    phone.classList.add("col-3");
+                    phone.innerText = o.phone;
+                    parentDiv.appendChild(phone);
+
+                    let state = document.createElement("li");
+                    state.setAttribute('id', 'data1');
+                    state.classList.add("col-3");
+                    state.innerText = o.state;
+                    parentDiv.appendChild(state);
+
+                    let web = document.createElement("li");
+                    web.setAttribute('id', 'data1');
+                    web.classList.add("col-3");
+                    web.innerText = o.website_url;
+                    parentDiv.appendChild(web);
+                }
+            })
+        }).catch((er) => console.error(er));
+}
