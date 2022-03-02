@@ -109,28 +109,7 @@ fetch("https://api.openbrewerydb.org/breweries")
         })
     }).catch((er) => console.error(er));
 
-
-/*-------------------------- TRYING TO FILTER---------------------- */
-
-/* function findBrew() {
-    let data = document.getElementById('search-Box');
-    let filter = input.value.toUpperCase();
-    let data1 = document.getElementById('data1');
-    let a;
-    let text;
-
-    for (let i = 0; i < data1.length; i++) {
-        a = data1[i].getElementById('data1')[0];
-        text = a.textContent || a.innerText;
-        if (text.toUpperCase().indexOf(filter) > -1) {
-            data1[i].style.display = "";
-        } else {
-            data1[i].style.display = "none"
-        }
-    }
-
-} */
-
+/* ========================================SEARCH FILTER============================= */
 
 async function search() {
 
