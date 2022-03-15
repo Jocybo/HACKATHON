@@ -36,7 +36,7 @@ let btn = document.createElement('button');
 btn.setAttribute('id', 'se-btn');
 btn.setAttribute('type', 'button');
 btn.setAttribute('onclick', 'search()');
-btn.classList.add('btn', 'btn-outline-success');
+btn.classList.add('btn', 'btn-outline-warning');
 btn.innerHTML = 'Search';
 document.getElementById('forms').appendChild(btn);
 
@@ -47,30 +47,41 @@ div1.setAttribute('id', 'second-div');
 div1.classList.add('container', 'mt-4');
 document.body.appendChild(div1);
 
-let div2 = document.createElement('div');
-div2.setAttribute('id', 'data');
-div2.classList.add('row', 'mt-4', 'bg-white');
-document.getElementById('second-div').appendChild(div2);
+let tableResponsive = document.createElement('div');
+tableResponsive.setAttribute('id', 'data')
+tableResponsive.classList.add('table-responsive');
+div1.appendChild(tableResponsive);
 
-let p1 = document.createElement('ul');
-p1.classList.add('col-3', 'h4', 'fs-4', 'bg-dark');
-p1.innerHTML = 'NAME'
-document.getElementById('data').appendChild(p1);
+let table = document.createElement('table');
+table.classList.add('table', 'table-dark', 'table-striped');
+tableResponsive.appendChild(table);
 
-let p2 = document.createElement('ul');
-p2.classList.add('col-3', 'h4', 'fs-4', 'bg-dark');
-p2.innerHTML = 'PHONE'
-document.getElementById('data').appendChild(p2);
+let thead = document.createElement('thead');
+thead.classList.add('thead');
+table.appendChild(thead);
 
-let p3 = document.createElement('ul');
-p3.classList.add('col-3', 'h4', 'fs-4', 'bg-dark');
-p3.innerHTML = 'ADDRESS'
-document.getElementById('data').appendChild(p3);
+let trow = document.createElement('tr');
+thead.appendChild(trow);
 
-let p4 = document.createElement('ul');
-p4.classList.add('col-3', 'h4', 'fs-4', 'bg-dark');
-p4.innerHTML = 'WEBSITE'
-document.getElementById('data').appendChild(p4);
+let thname = document.createElement('th');
+thname.setAttribute('id', 'thname')
+thname.innerHTML = 'NAME';
+trow.appendChild(thname);
+
+let thphone = document.createElement('th');
+thphone.setAttribute('id', 'thphone')
+thphone.innerHTML = 'PHONE';
+trow.appendChild(thphone);
+
+let thweb = document.createElement('th');
+thweb.setAttribute('id', 'thweb')
+thweb.innerHTML = 'WEBSITE';
+trow.appendChild(thweb);
+
+let thaddress = document.createElement('th');
+thaddress.setAttribute('id', 'thaddress')
+thaddress.innerHTML = 'ADDRESS';
+trow.appendChild(thaddress);
 
 /*-------------------------- FETCHING DATA FROM API---------------------------- */
 
@@ -79,32 +90,28 @@ fetch("https://api.openbrewerydb.org/breweries")
     .then((v) => v.json())
     .then((response) => {
         globalResponse = response;
-        let parentDiv = document.getElementById("data");
+        // let parentDiv = document.getElementById("data");
         response.map((o) => {
 
-            let name = document.createElement("li");
-            name.setAttribute('id', 'data1');
-            name.classList.add("col-3");
+            let rowone = document.createElement('tr');
+            table.appendChild(rowone);
+            let name = document.createElement("td");
             name.innerText = o.name;
-            parentDiv.appendChild(name);
+            rowone.appendChild(name)
 
-            let phone = document.createElement("li");
-            phone.setAttribute('id', 'data1');
-            phone.classList.add("col-3");
+
+            let phone = document.createElement("td");
             phone.innerText = o.phone;
-            parentDiv.appendChild(phone);
+            rowone.appendChild(phone);
 
-            let state = document.createElement("li");
-            state.setAttribute('id', 'data1');
-            state.classList.add("col-3");
-            state.innerText = o.state;
-            parentDiv.appendChild(state);
-
-            let web = document.createElement("li");
-            web.setAttribute('id', 'data1');
-            web.classList.add("col-3");
+            let web = document.createElement("td");
             web.innerText = o.website_url;
-            parentDiv.appendChild(web);
+            rowone.appendChild(web)
+
+            let state = document.createElement("td");
+            state.innerText = o.state;
+            rowone.appendChild(state)
+
 
         })
     }).catch((er) => console.error(er));
@@ -123,29 +130,25 @@ async function search() {
             let a = document.getElementById('search-Box').value;
             response.map((o) => {
                 if (((o.name != null) && (o.name.includes(a))) || ((o.phone != null) && (o.phone.includes(a))) || ((o.state != null) && (o.state.includes(a))) || ((o.website_url != null) && (o.website_url.includes(a)))) {
-                    let name = document.createElement("li");
-                    name.setAttribute('id', 'data1');
-                    name.classList.add("col-3");
+
+                    let rowone = document.createElement('tr');
+                    table.appendChild(rowone);
+                    let name = document.createElement("td");
                     name.innerText = o.name;
-                    parentDiv.appendChild(name);
+                    rowone.appendChild(name)
 
-                    let phone = document.createElement("li");
-                    phone.setAttribute('id', 'data1');
-                    phone.classList.add("col-3");
+
+                    let phone = document.createElement("td");
                     phone.innerText = o.phone;
-                    parentDiv.appendChild(phone);
+                    rowone.appendChild(phone);
 
-                    let state = document.createElement("li");
-                    state.setAttribute('id', 'data1');
-                    state.classList.add("col-3");
-                    state.innerText = o.state;
-                    parentDiv.appendChild(state);
-
-                    let web = document.createElement("li");
-                    web.setAttribute('id', 'data1');
-                    web.classList.add("col-3");
+                    let web = document.createElement("td");
                     web.innerText = o.website_url;
-                    parentDiv.appendChild(web);
+                    rowone.appendChild(web)
+
+                    let state = document.createElement("td");
+                    state.innerText = o.state;
+                    rowone.appendChild(state)
                 }
             })
         }).catch((er) => console.error(er));
